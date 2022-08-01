@@ -1,0 +1,91 @@
+<section class="main-wrapper d-flex-center-center">
+    <button type="button" class="btn btn-click" (click)="openPopup()">Click
+        Here</button>
+</section>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayStyle}">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h6 class="modal-title" id="exampleModalLabel">Alerts</h6>
+                <img src="./../assets/error transparent.svg" (click)="closePopup()">
+            </div>
+            <div class="modal-body">
+                <ul class="alerts-tabs" id="tabs_ul">
+                    <li id="immuLi">Immunisation Alerts</li>
+                    <li>Lab Alerts</li>
+                    <li>DI Alerts</li>
+                    <li>Procedure Alerts</li>
+                    <li>RX Specific Alerts</li>
+                    <li>DX Specific Alerts</li>
+                    <li>Patient Specific Alerts</li>
+                </ul>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 col-md-8 border-right">
+                            <h6 class="title">Immunization Alerts</h6>
+                            <div class="d-flex-center-between">
+                                <div class="d-flex-align-center">
+                                    <label class="find-lbl">Find</label>
+                                    <input type="text" class="form-control" [(ngModel)]="filterTerm"/>
+                                </div>
+                                <button type="button" class="del-btn">Delete</button>
+                            </div>
+                            <table id="data_table" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center"><input type="checkbox" disabled /></th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Web Reference</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let product of products | filter: filterTerm | paginate: {itemsPerPage:10, currentPage : p}">
+                                        <td class="text-center"><input type="checkbox" disabled></td>
+                                        <td>{{ product.name }}</td>
+                                        <td>{{ product.description }}</td>
+                                        <td>{{ product.webReference }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="table-footer">
+                                <label class="tot-lbl">Total Results : <span id="totalResult">{{products.length}}</span></label>
+                                <label class="d-flex-align-center">Page 
+                                    <!-- <span class="show-page">{{p}}</span> of 
+                                    <span class="tot-page">{{products.length}}</span> -->
+                                    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                                </label>
+                                <!-- <a href="#" class="back-btn"> &lt; </a>
+                                <a href="#" class="forw-btn"> &gt; </a> -->
+
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-4">
+                            <form class="form-wrapper" #myForm="ngForm">
+                                <div class="form-group">
+                                    <label>Name</label>
+                                    <input type="text" class="form-control" name="name" ngModel/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <input type="text" class="form-control" name="description" ngModel/>
+                                </div>
+                                <div class="form-group">
+                                    <label>Web Ref.</label>
+                                    <input type="text" class="form-control" name="webReference" ngModel/>
+                                </div>
+                                <button type="button" class="add-btn" (click)="addUser(myForm.value)">Add</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex-justify-end footer-btn">
+                <button type="button" class="btn cancel-btn" (click)="closePopup()">Cancel</button>
+                <button type="button" class="btn ok-btn">Ok</button>
+            </div>
+        </div>
+    </div>
+</div>
